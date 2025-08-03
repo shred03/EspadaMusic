@@ -76,7 +76,7 @@ gp_buttons = [
     ],
     [
         InlineKeyboardButton(
-            text="☁️ sᴏᴜʀᴄᴇ ☁️", url="https://github.com/TheAnonymous2005/FallenMusic"
+            text="☁️ sᴏᴜʀᴄᴇ ☁️", url="https://github.com/shred03/EspadaMusic"
         ),
         InlineKeyboardButton(text="🥀 ᴅᴇᴠᴇʟᴏᴩᴇʀ 🥀", user_id=config.OWNER_ID),
     ],
