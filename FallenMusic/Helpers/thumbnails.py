@@ -1,25 +1,3 @@
-# MIT License
-#
-# Copyright (c) 2023 AnonymousX1025
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 import os
 import re
 import textwrap
@@ -50,6 +28,13 @@ def add_corners(im):
     mask = mask.resize(im.size, Image.LANCZOS)
     mask = ImageChops.darker(mask, im.split()[-1])
     im.putalpha(mask)
+
+
+def get_text_dimensions(draw, text, font):
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    return text_width, text_height
 
 
 async def gen_thumb(videoid, user_id):
@@ -158,7 +143,7 @@ async def gen_thumb(videoid, user_id):
                 font=font,
             )
             if para[0]:
-                text_w, text_h = draw.textsize(f"{para[0]}", font=font)
+                text_w, text_h = get_text_dimensions(draw, f"{para[0]}", font)
                 draw.text(
                     ((1280 - text_w) / 2, 530),
                     f"{para[0]}",
@@ -168,7 +153,7 @@ async def gen_thumb(videoid, user_id):
                     font=font,
                 )
             if para[1]:
-                text_w, text_h = draw.textsize(f"{para[1]}", font=font)
+                text_w, text_h = get_text_dimensions(draw, f"{para[1]}", font)
                 draw.text(
                     ((1280 - text_w) / 2, 580),
                     f"{para[1]}",
@@ -179,7 +164,7 @@ async def gen_thumb(videoid, user_id):
                 )
         except:
             pass
-        text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
+        text_w, text_h = get_text_dimensions(draw, f"Duration: {duration} Mins", arial)
         draw.text(
             ((1280 - text_w) / 2, 660),
             f"Duration: {duration} Mins",
@@ -303,7 +288,7 @@ async def gen_qthumb(videoid, user_id):
                 font=font,
             )
             if para[0]:
-                text_w, text_h = draw.textsize(f"{para[0]}", font=font)
+                text_w, text_h = get_text_dimensions(draw, f"{para[0]}", font)
                 draw.text(
                     ((1280 - text_w) / 2, 530),
                     f"{para[0]}",
@@ -313,7 +298,7 @@ async def gen_qthumb(videoid, user_id):
                     font=font,
                 )
             if para[1]:
-                text_w, text_h = draw.textsize(f"{para[1]}", font=font)
+                text_w, text_h = get_text_dimensions(draw, f"{para[1]}", font)
                 draw.text(
                     ((1280 - text_w) / 2, 580),
                     f"{para[1]}",
@@ -324,7 +309,7 @@ async def gen_qthumb(videoid, user_id):
                 )
         except:
             pass
-        text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
+        text_w, text_h = get_text_dimensions(draw, f"Duration: {duration} Mins", arial)
         draw.text(
             ((1280 - text_w) / 2, 660),
             f"Duration: {duration} Mins",
