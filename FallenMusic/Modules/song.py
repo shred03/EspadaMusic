@@ -53,9 +53,9 @@ async def song(_, message: Message):
     await m.edit_text("» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ sᴏɴɢ,\n\nᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...")
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(link, download=False)
-            audio_file = ydl.prepare_filename(info_dict)
-            ydl.process_info(info_dict)
+            info_dict = ydl.extract_info(link, download=True)
+            original_filename = ydl.prepare_filename(info_dict)
+            audio_file = os.path.splitext(original_filename)[0] + ".mp3"
         rep = f"☁️ **ᴛɪᴛʟᴇ :** [{title[:23]}]({link})\n⏱️ **ᴅᴜʀᴀᴛɪᴏɴ :** `{duration}`\n🥀 **ᴜᴘʟᴏᴀᴅᴇᴅ ʙʏ :** {BOT_MENTION}"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
