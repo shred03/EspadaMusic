@@ -21,11 +21,17 @@ async def song(_, message: Message):
 
     query = "".join(" " + str(i) for i in message.command[1:])
     ydl_opts = {
-        "format": "bestaudio[ext=m4a]/bestaudio/best",
+        "format": "bestaudio[ext=m4a]/bestaudio",
         "cookiefile": cookie_path,
         "noplaylist": True,
         "quiet": True,
         "no_warnings": True,
+        "postprocessors": [
+            {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "m4a",
+            }
+        ],
     }
     try:
         results = YoutubeSearch(query, max_results=5).to_dict()
