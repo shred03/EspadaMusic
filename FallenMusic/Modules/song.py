@@ -43,7 +43,7 @@ async def song(_, message: Message):
 
     query = "".join(" " + str(i) for i in message.command[1:])
     ydl_opts = {
-        "format": "bestaudio[ext=m4a]",
+        "format": "bestaudio/best",
         "cookiefile": cookie_path,
         "noplaylist": True,
         "quiet": True,
