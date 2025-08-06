@@ -56,7 +56,12 @@ async def song(_, message: Message):
             info_dict = ydl.extract_info(link, download=True)
             original_filename = ydl.prepare_filename(info_dict)
             audio_file = os.path.splitext(original_filename)[0] + ".mp3"
-        rep = f"☁️ **ᴛɪᴛʟᴇ :** [{title[:23]}]({link})\n⏱️ **ᴅᴜʀᴀᴛɪᴏɴ :** `{duration}`\n🥀 **ᴜᴘʟᴏᴀᴅᴇᴅ ʙʏ :** {BOT_MENTION}"
+        rep = (
+    f"☁️ **ᴛɪᴛʟᴇ :** [{title[:23]}]({link})\n"
+    f"⏱️ **ᴅᴜʀᴀᴛɪᴏɴ :** `{duration}`\n"
+    f"🥀 **ᴜᴘʟᴏᴀᴅᴇᴅ ʙʏ :** {BOT_MENTION}\n"
+    f"⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ: [𝗘𝘀𝗽𝗮𝗱𝗮 𝗢𝗿𝗴](https://t.me/espada_org)"
+)
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
