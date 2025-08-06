@@ -34,6 +34,7 @@ from FallenMusic import BOT_MENTION, BOT_USERNAME, LOGGER, app
 
 @app.on_message(filters.command(["song", "vsong", "video", "music"]))
 async def song(_, message: Message):
+    cookie_path = os.path.join(os.path.dirname(__file__), "cookies.txt")
     try:
         await message.delete()
     except:
@@ -41,7 +42,13 @@ async def song(_, message: Message):
     m = await message.reply_text("🔎")
 
     query = "".join(" " + str(i) for i in message.command[1:])
-    ydl_opts = {"format": "bestaudio[ext=m4a]"}
+    ydl_opts = {
+        "format": "bestaudio[ext=m4a]",
+        "cookiefile": cookie_path,
+        "noplaylist": True,
+        "quiet": True,
+        "no_warnings": True,
+    }
     try:
         results = YoutubeSearch(query, max_results=5).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
