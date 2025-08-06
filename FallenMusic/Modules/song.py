@@ -21,18 +21,11 @@ async def song(_, message: Message):
 
     query = "".join(" " + str(i) for i in message.command[1:])
     ydl_opts = {
-        "format": "bestaudio/best",
+        "format": "bestaudio[ext=m4a]",
         "cookiefile": cookie_path,
         "noplaylist": True,
         "quiet": True,
         "no_warnings": True,
-        "postprocessors": [
-        {
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "320",
-        }
-    ],
     }
     try:
         results = YoutubeSearch(query, max_results=5).to_dict()
@@ -54,13 +47,12 @@ async def song(_, message: Message):
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
-            original_filename = ydl.prepare_filename(info_dict)
-            audio_file = os.path.splitext(original_filename)[0] + ".mp3"
+            audio_file = ydl.prepare_filename(info_dict)
         rep = (
     f"☁️ **ᴛɪᴛʟᴇ :** [{title[:23]}]({link})\n"
     f"⏱️ **ᴅᴜʀᴀᴛɪᴏɴ :** `{duration}`\n"
     f"🥀 **ᴜᴘʟᴏᴀᴅᴇᴅ ʙʏ :** {BOT_MENTION}\n"
-    f"⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ: [𝗘𝘀𝗽𝗮𝗱𝗮 𝗢𝗿𝗴](https://t.me/espada_org)"
+    f"⚡ **ᴘᴏᴡᴇʀᴇᴅ ʙʏ:** [ESPADA ORG](https://t.me/espada_org)"
 )
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
